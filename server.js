@@ -25,6 +25,9 @@ app.post('/person', async (req,res)=>{
 
     // const newPerson= new Person(data);
     // //save the new person to the database
+
+
+    // nowdays we not use .save function-----------
     // newPerson.save((error, saved_Person) =>{
     //     if(error){
     //         console.log("Error saving person date",error);
@@ -40,6 +43,7 @@ app.post('/person', async (req,res)=>{
     try {
         const data= req.body;  // assuming the request body contain the person date
 
+        //create a new person doucment using the mongoose model
         const newPerson= new Person(data);
   
         //save the new person to the database
@@ -56,6 +60,18 @@ app.post('/person', async (req,res)=>{
 
 });
 
+//get method to all person
+app.get('/person', async (req,res)=>{
+    try {
+        const data= await Person.find();
+        console.log("data fetched");
+        res.status(200).json(data);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({error:"Internal server error"});
+    }
+});
+  
 app.listen(4000,()=>{
     console.log("server is running");
 });
